@@ -7,21 +7,31 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
+import www.yema.cn.service.IUserService;
 import www.yema.cn.vo.TbUser;
 
-@RestController
+@Controller
 public class LoginResource {
- 
+    
+    @Autowired
+    private IUserService userService;           
+     
      //退出的时候是get请求，主要是用于退出
     @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login(){
-        return "login登录界面";
+    public String login(HttpServletRequest request){
+        SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+        String url = null;
+        if (null != savedRequest) {
+            url = savedRequest.getRequestUrl();
+        }
+        System.out.println("要转到的url="+url);
+        return "/login";
     }
-
     //post登录
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(String username, String password,HttpServletRequest request){
@@ -42,16 +52,20 @@ public class LoginResource {
             TbUser user=(TbUser) subject.getPrincipal();
             //存入session
             request.getSession().setAttribute("user", user);
-            return "登录成功";
+            return "/user/index";
         } catch(Exception e) {
-            return "登录失败";//返回登录页面
+            return "/login";//返回登录页面
         }       
     }
 
     @RequestMapping(value = "/index")
-    public String index(){
-        SecurityUtils.getSubject().checkPermission("aa");
-        return "进入主页";
+    public String index(){       
+        return "/user/index1";
+    }
+    
+    @RequestMapping(value = "/index2")
+    public String index2(){       
+        return "/user/index2";
     }
     
     /**
@@ -66,6 +80,6 @@ public class LoginResource {
         } catch (Exception e) {
             return "error";
         }
-        return "退出成功";
+        return "/login";
     }
 }

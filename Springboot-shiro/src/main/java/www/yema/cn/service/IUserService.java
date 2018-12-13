@@ -5,7 +5,7 @@ import java.util.Set;
 import www.yema.cn.vo.TbUser;
 
 public interface IUserService {
-    TbUser getUserByUsername(String username);
-    Set<String> getRoles(String userName);
-    Set<String> getPermissions(String userName);
+    public TbUser getUserByUsername(String username);
+    public Set<String> getRoles(String userName);
+    public Set<String> getPermissions(String userName);
 }

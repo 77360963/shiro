@@ -24,12 +24,12 @@ public class LoginResource {
      //退出的时候是get请求，主要是用于退出
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(HttpServletRequest request){
-        SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+    /*    SavedRequest savedRequest = WebUtils.getSavedRequest(request);
         String url = null;
         if (null != savedRequest) {
             url = savedRequest.getRequestUrl();
         }
-        System.out.println("要转到的url="+url);
+        System.out.println("要转到的url="+url);*/
         return "/login";
     }
     //post登录
@@ -59,12 +59,14 @@ public class LoginResource {
     }
 
     @RequestMapping(value = "/index")
-    public String index(){       
+    public String index(){      
+        System.out.println("-----------111");
         return "/user/index1";
     }
     
     @RequestMapping(value = "/index2")
     public String index2(){       
+        System.out.println("-----------22222");
         return "/user/index2";
     }
     

@@ -1,5 +1,6 @@
 package www.yema.cn.shiro;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class MyPermissionFilter extends AuthorizationFilter{
         String[] perms = (String[]) ((String[]) o);
         boolean isPermitted = true;
 
-        if (subject.getPrincipal() == null) {
+    if (subject.getPrincipal() == null) {
             if(FilterUtil.isAjax(request)){
                 log.info("未登录或登录时间过长,是ajax！");
                 Map<String, Object> resultMap = new HashMap<String, Object>();
